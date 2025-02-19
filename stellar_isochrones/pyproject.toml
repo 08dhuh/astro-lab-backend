@@ -8,6 +8,10 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "numpy (>=2.2.3,<3.0.0)",
+    "pandas (>=2.2.3,<3.0.0)",
+    "scipy (>=1.15.2,<2.0.0)",
+    "astroquery (>=0.4.9.post1,<0.5.0)"
 ]
 
 
