@@ -19,6 +19,8 @@ ISOCHRONE_COLUMNS = [
     "Z", "age", "log_age", "M_ini", "M_act", "logL/Lo", "logTe", "logG",
     "Mbol", "Mu", "Mb", "Mv", "Mr", "Mi", "Mj", "Mh", "Mk", "Flum"
 ]
+
+ISOCHRONE_SCHEMA_LIST = ['Z','log_age','Mv','b_v']
 ################################################################
 
 #Open Cluster UVB photometry query parameters
