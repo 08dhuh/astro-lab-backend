@@ -38,5 +38,5 @@ class Isochrone(SQLModel, table=True):
     log_age: float
     Mv: float
     b_v:float
-    extra_columns: Optional[str] = None #JSON-encoded, optional columns
+    #extra_columns: Optional[str] = None #JSON-encoded, optional columns
 

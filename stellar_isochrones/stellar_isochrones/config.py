@@ -28,13 +28,19 @@ OC_LIST_URL = "https://webda.physics.muni.cz/cgi-bin/slm.cgi?ubvpe"
 OC_UVB_BASE_URL="https://webda.physics.muni.cz/cgi-bin/frame_data_list.cgi?{dirname}+ubv+ubv.peo"
 LYNGA_CAT_BASE_URL="https://webda.physics.muni.cz/cgi-bin/frame_data_list.cgi?{dirname}+lyn+lyn.dat"
 
-cluster_df_columns = ['id', 'name', 'star_count']
+#cluster_df_columns = ['id', 'name', 'star_count']
 
 # individual cluster query
 
 #VIZIER catalogue
-CLUSTER_CATALOGUE = "B/ocl/clusters"
-
+VIZIER_CLUSTER_CATALOGUE = "B/ocl/clusters"
+VIZIER_QUERY_COLUMNS = [
+    'Cluster', 
+    'E(B-V)', # [0/6] mag Colour excess in BV
+    '[Fe/H]', #[-1.6/0.5] Sun Metallicity
+    'Dist', #[25/15000] pc Distance from WEBDA
+    'Age', # [6/10.1] yr Age (in log t)
+]
 #ZAMS
 #mist_url = "https://waps.cfa.harvard.edu/MIST/iso_form.php"
 #ISO_ZIP_BASE_URL = "https://waps.cfa.harvard.edu/MIST/{iso_link}"

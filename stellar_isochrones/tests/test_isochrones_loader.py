@@ -21,8 +21,8 @@ def test_load_isochrones_from_files():
 def test_read_default_isochrones():
     try:
         df = read_default_isochrones()
-        print(df.head(10))
-        print(df.describe())
+        #print(df.head(10))
+        #print(df.describe())
         assert isinstance(df, pd.DataFrame)
         assert not df.empty
         assert list(df.columns) == ISOCHRONE_SCHEMA_LIST
