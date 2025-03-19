@@ -1,33 +1,45 @@
-from sqlmodel import Session
+from sqlmodel import Session, select
 from sqlalchemy.sql import text
 from sqlalchemy.exc import SQLAlchemyError
-from app.database.models.hr_models import engine
+from app.database.models.hr_models import StarCluster, ZAMS, ClusterUBV, Isochrone, engine
 
-from sqlmodel import Session, select
-from sqlalchemy.exc import SQLAlchemyError
-from app.database.models.hr_models import StarCluster, ZAMS, Isochrone, engine
+#TODO: centralised logging
 
-def get_table_contents(model):
-    """Returns a table."""
+def get_all_clusters():
+    """Returns all star clusters."""
     try:
         with Session(engine) as session:
-            count = session.exec(select(model)).count()
-            if count == 0:
-                return {"status": "empty", "message": f"{model.__tablename__} has no records."}
-
-            sample_data = session.exec(select(model)).all()
-
-            return {
-                "status": "ok",
-                "record_count": count,
-                "sample_data": [row.dict() for row in sample_data]
-            }
+            return session.exec(select(StarCluster)).all()
 
     except SQLAlchemyError as e:
         return {"error": f"Database error: {str(e)}"}
     except Exception as e:
         return {"error": f"Unexpected failure: {str(e)}"}
+    
+def get_all_cluster_UBVS():
+    try:
+        with Session(engine) as session:
+            return session.exec(select(ClusterUBV)).all()
+    except SQLAlchemyError as e:
+        return {"error": f"Database error: {str(e)}"}
+    except Exception as e:
+        return {"error": f"Unexpected failure: {str(e)}"}
 
+def get_isochrones(limit:int = 100):
+    try:
+        with Session(engine) as session:
+            return session.exec(select(Isochrone).limit(limit)).all()
+    except SQLAlchemyError as e:
+        return {"error": f"Database error: {str(e)}"}
+
+def get_cluster_ubv(cluster_id: int):
+    try:
+        with Session(engine) as session:
+            return session.exec(select(ClusterUBV).where(ClusterUBV.cluster_id == cluster_id)).first()
+    except SQLAlchemyError as e:
+        return {"error": f"Database error: {str(e)}"}
+    except Exception as e:
+        return {"error": f"Unexpected failure: {str(e)}"}
 
 def check_database_status():
     """Returns a list of tables in the database."""

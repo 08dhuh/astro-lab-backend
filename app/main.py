@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.api.routes import router
+from app.main_routes import router
 from app.utils.db_utils import is_database_ready
 
 

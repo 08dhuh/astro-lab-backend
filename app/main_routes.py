@@ -1,13 +1,9 @@
 from fastapi import APIRouter
-from app.services.db_service import check_database_status
+from app.api.routes.db_routes import router as db_router
 
 router = APIRouter()
-
 @router.get("/")
 async def root():
     return {"message": "Welcome to Astro Lab Backend!"}
 
-
-@router.get("/db-status")
-def db_status():
-    return check_database_status()
+router.include_router(db_router, prefix="/api", tags=['database'])
