@@ -6,7 +6,7 @@ from app.database.models.hr_models import StarCluster, ZAMS, ClusterUBV, Isochro
 #TODO: centralised logging
 
 def get_all_clusters():
-    """Returns all star clusters."""
+    """Returns all open cluster info."""
     try:
         with Session(engine) as session:
             return session.exec(select(StarCluster)).all()
@@ -25,21 +25,36 @@ def get_all_cluster_UBVS():
     except Exception as e:
         return {"error": f"Unexpected failure: {str(e)}"}
 
-def get_isochrones(limit:int = 100):
+def get_isochrones(limit:int = 1000): #pagination needed?
     try:
         with Session(engine) as session:
             return session.exec(select(Isochrone).limit(limit)).all()
     except SQLAlchemyError as e:
         return {"error": f"Database error: {str(e)}"}
 
-def get_cluster_ubv(cluster_id: int):
+def get_cluster_ubv(cluster_pk: int):
     try:
         with Session(engine) as session:
-            return session.exec(select(ClusterUBV).where(ClusterUBV.cluster_id == cluster_id)).first()
+            return session.exec(select(ClusterUBV).where(ClusterUBV.cluster_pk == cluster_pk)).all()
     except SQLAlchemyError as e:
         return {"error": f"Database error: {str(e)}"}
     except Exception as e:
         return {"error": f"Unexpected failure: {str(e)}"}
+    
+
+def find_missing_cluster_pks():
+    with Session(engine) as session:        
+        existing_pks = sorted(set(session.exec(select(ClusterUBV.cluster_pk))))
+
+        if not existing_pks:
+            print("No cluster UBV data found.")
+            return []
+
+        expected_pks = set(range(min(existing_pks), max(existing_pks) + 1))
+        missing_pks = sorted(expected_pks - set(existing_pks))
+
+        return missing_pks
+
 
 def check_database_status():
     """Returns a list of tables in the database."""

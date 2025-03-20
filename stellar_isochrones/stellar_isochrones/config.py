@@ -27,7 +27,7 @@ ISOCHRONE_SCHEMA_LIST = ['Z','log_age','Mv','b_v']
 OC_LIST_URL = "https://webda.physics.muni.cz/cgi-bin/slm.cgi?ubvpe" 
 OC_UVB_BASE_URL="https://webda.physics.muni.cz/cgi-bin/frame_data_list.cgi?{dirname}+ubv+ubv.peo"
 LYNGA_CAT_BASE_URL="https://webda.physics.muni.cz/cgi-bin/frame_data_list.cgi?{dirname}+lyn+lyn.dat"
-
+OC_PAGE_URL = "https://webda.physics.muni.cz/cgi-bin/ocl_page.cgi?dirname={dirname}"
 #cluster_df_columns = ['id', 'name', 'star_count']
 
 # individual cluster query

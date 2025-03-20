@@ -12,7 +12,8 @@ engine = create_engine(DATABASE_URL, echo=True)
 #print(f"DEBUG: Using database at {DATABASE_URL}")  #TODO: centralised logging
 
 class StarCluster(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    pk: Optional[int] = Field(default=None, primary_key=True)
+    cluster_id: str = Field(unique=True, index=True)
     name: str
     star_count: int
     reddening: Optional[float] = None #E(B-V)
@@ -21,19 +22,19 @@ class StarCluster(SQLModel, table=True):
     log_age: Optional[float] = None #log age in years
 
 class ClusterUBV(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    cluster_id: int = Field(foreign_key="starcluster.id")
-    v_mag: float #Apparent V-band magnitude
+    pk: Optional[int] = Field(default=None, primary_key=True)
+    cluster_pk: int = Field(foreign_key="starcluster.pk")
+    Mv: float #Apparent V-band magnitude
     b_v: float  #B-V colour index
 
 
 class ZAMS(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    pk: Optional[int] = Field(default=None, primary_key=True)
     b_v: float
     Mv: float
 
 class Isochrone(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    pk: Optional[int] = Field(default=None, primary_key=True)
     Z: float
     log_age: float
     Mv: float
