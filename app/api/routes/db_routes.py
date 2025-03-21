@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from app.services.db_service import *
+#from app.services.isochrone_service import isochrone_data
 
 router = APIRouter()
 
@@ -7,6 +8,10 @@ router = APIRouter()
 @router.get("/db-status")
 def db_status():
     return check_database_status()
+
+@router.get("/isochrone/")
+def api_get_isochrone(log_age: float, Z:float, request: Request):
+    return query_isochrone(log_age=log_age, Z=Z, app=request.app)
 
 
 @router.get("/debug/clusters")
@@ -22,7 +27,7 @@ def api_get_all_cluster_ubvs():
 
 
 @router.get("/debug/isochrones")
-def api_get_isochrones(limit: int = 100):
+def api_get_isochrones(limit: int = -1):
     isochrones = get_isochrones(limit=limit)
     return isochrones
 
