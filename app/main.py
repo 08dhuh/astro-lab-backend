@@ -22,7 +22,7 @@ app = FastAPI(lifespan=lifespan)
 # origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "https://astro-front.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],  
     allow_headers=["*"],  
